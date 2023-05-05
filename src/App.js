@@ -1,13 +1,14 @@
 import './App.css';
 
 import Header from './Header'
+import SectionOne from './SectionOne';
+
 
 function App() {
   return (
     <div className='app'>
-      <h1>App</h1>
-      <p>hello world</p>
-      <Header myname="ali" />
+      <Header />
+      <SectionOne />
     </div>
   );
 }
