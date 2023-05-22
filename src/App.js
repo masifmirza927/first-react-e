@@ -1,31 +1,18 @@
 import './App.css';
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header'
-import Footer from "./components/Footer"
-
-import Home from './pages/Home'
-import About from './pages/About'
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Notfound from './pages/Notfound';
+import { useState } from "react"
+import MyFirstComp from "./MyFirstComp"
 
 function App() {
-  return (
-    <div className='app container'>
-      
-      <BrowserRouter>
-      <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='*' element={<Notfound />} />
-        </Routes>
-      </BrowserRouter>
+  const [age, setAge] = useState(18);
 
-      <Footer />
+const updateAge = () => {
+    setAge(20)
+}
+  return (
+    <div className='app'>
+     <h1>welcome to my application - {age} </h1>
+     <button onClick={updateAge} >Update Age</button>
+     <MyFirstComp parent="xyz"  />
     </div>
   );
 }
