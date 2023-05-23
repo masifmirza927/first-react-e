@@ -10,13 +10,14 @@ function App() {
     <div className='app'>
      <ul>
        {
-        fruits.map( (item) => {
-          return <li>{item}</li>
+        fruits.map( (item, index) => {
+          return <li key={index}> {item} </li>
         })
        }
      </ul>
     </div>
   );
 }
+
 
 export default App;
