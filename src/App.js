@@ -14,12 +14,10 @@ function App() {
     setFruits(newAr);
   }
 
- const deleteItem = (targetItem) => {
-    
-    const resutl = fruits.filter( (item) => {
-        return item != targetItem
-    });
-    setFruits(resutl);
+ const deleteItem = (index) => {
+    const result = fruits.toSpliced(index, 1);
+
+    setFruits(result);
  }
 
   return (
@@ -30,7 +28,7 @@ function App() {
       <ul>
         {
           fruits.map((item, index) => {
-            return <li key={index}> {item} <button onClick={ () => { deleteItem(item) } } >X</button> </li>
+            return <li key={index}> {item}  <button onClick={ () => { deleteItem(index) } } >X</button>  </li>
           })
         }
       </ul>
