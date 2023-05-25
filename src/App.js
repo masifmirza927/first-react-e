@@ -4,9 +4,7 @@ import { useState, useRef } from "react"
 function App() {
   const [fruits, setFruits] = useState(["apple", "cherry"]);
   const [inputValue, setInputValue] = useState("");
-
   const inputFieldRef = useRef("");
-
 
   const updateInputVal = (event) => {
     setInputValue(event.target.value);
@@ -19,15 +17,21 @@ function App() {
     inputFieldRef.current.focus();
   }
 
-  
  const deleteItem = (index) => {
     const result = fruits.toSpliced(index, 1);
     setFruits(result);
  }
 
+ const detectEnterKey = (event) => {
+    if(event.key == "Enter") {
+      updateArray();
+    }
+ }
+ 
+
   return (
     <div className='app'>
-      <input onChange={updateInputVal} type='text'value={inputValue} ref={inputFieldRef} />
+      <input onChange={updateInputVal} type='text' value={inputValue} ref={inputFieldRef} onKeyUp={detectEnterKey}  />
       <button onClick={updateArray}>ADD</button>
 
       <ul>
