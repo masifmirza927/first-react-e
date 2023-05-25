@@ -1,9 +1,12 @@
 import './App.css';
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 function App() {
   const [fruits, setFruits] = useState(["apple", "cherry"]);
   const [inputValue, setInputValue] = useState("");
+
+  const inputFieldRef = useRef("");
+
 
   const updateInputVal = (event) => {
     setInputValue(event.target.value);
@@ -12,17 +15,19 @@ function App() {
   const updateArray = () => {
     const newAr = [...fruits, inputValue];
     setFruits(newAr);
+    setInputValue("");
+    inputFieldRef.current.focus();
   }
 
+  
  const deleteItem = (index) => {
     const result = fruits.toSpliced(index, 1);
-
     setFruits(result);
  }
 
   return (
     <div className='app'>
-      <input onChange={updateInputVal} type='text' />
+      <input onChange={updateInputVal} type='text'value={inputValue} ref={inputFieldRef} />
       <button onClick={updateArray}>ADD</button>
 
       <ul>
