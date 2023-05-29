@@ -2,7 +2,8 @@ import './App.css';
 import { useState, useRef } from "react"
 
 function App() {
-  const [fruits, setFruits] = useState(["apple", "cherry"]);
+  const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const inputFieldRef = useRef("");
 
@@ -11,36 +12,83 @@ function App() {
   }
 
   const updateArray = () => {
-    const newAr = [...fruits, inputValue];
-    setFruits(newAr);
+    const newAr = [...tasks, inputValue];
+    setTasks(newAr);
     setInputValue("");
     inputFieldRef.current.focus();
   }
 
- const deleteItem = (index) => {
-    const result = fruits.toSpliced(index, 1);
-    setFruits(result);
- }
+  const deleteItem = (index) => {
+    const result = tasks.toSpliced(index, 1);
+    setTasks(result);
+  }
 
- const detectEnterKey = (event) => {
-    if(event.key == "Enter") {
+  const detectEnterKey = (event) => {
+    if (event.key == "Enter") {
       updateArray();
     }
- }
- 
+  }
+
+// handling checked tasks, completed tasks  
+  const handleCheckbox = (event, item, index) => {
+    if(event.target.checked == true) {
+      const newAr = [...completedTasks, item];
+      setCompletedTasks(newAr);
+      // removing from tasks array
+      deleteItem(index);
+    }
+  }
+
 
   return (
     <div className='app'>
-      <input onChange={updateInputVal} type='text' value={inputValue} ref={inputFieldRef} onKeyUp={detectEnterKey}  />
-      <button onClick={updateArray}>ADD</button>
+      <div className='container'>
+        <div className='inputBox'>
+          <input onChange={updateInputVal} type='text' value={inputValue} ref={inputFieldRef} onKeyUp={detectEnterKey} />
+          <button className='btn' onClick={updateArray}>ADD</button>
+        </div>
 
-      <ul>
-        {
-          fruits.map((item, index) => {
-            return <li key={index}> {item}  <button onClick={ () => { deleteItem(index) } } >X</button>  </li>
-          })
-        }
-      </ul>
+        <div className='listBox'>
+          <h3>Active Tasks</h3>
+          <ul>
+            {
+              tasks.map((item, index) => {
+                return (<li key={index}> 
+                  <input onChange={ (event) => handleCheckbox(event, item, index) } type='checkbox' />
+                  <span>{item}</span>
+                  <button className='delBtn' onClick={() => { deleteItem(index) }} >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{fill: "rgb(255 0 0)"}}><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+                  </button>
+                </li>
+                )
+              })
+            }
+          </ul>
+
+          
+            <div>
+              <h3>Completed Tasks</h3>
+            <ul>
+            {
+              completedTasks.map((item, index) => {
+                return (<li key={index}> 
+                  <input type='checkbox' />
+                  <span>{item}</span>
+                  <button className='delBtn' >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{fill: "rgb(255 0 0)"}}><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+                  </button>
+                </li>
+                )
+              })
+            }
+          </ul>
+            </div>
+
+
+
+        </div>
+
+      </div>
     </div>
   );
 }
